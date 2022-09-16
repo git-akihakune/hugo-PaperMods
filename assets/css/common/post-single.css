@@ -399,3 +399,7 @@ img.in-text {
     display: inline;
     margin: auto;
 }
+
+figcaption {
+    text-align: center;
+}
