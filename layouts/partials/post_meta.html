@@ -1,7 +1,17 @@
 {{- $scratch := newScratch }}
 
 {{- if not .Date.IsZero -}}
-{{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default "January 2, 2006" site.Params.DateFormat)))) }}
+{{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default "January 2, 2006" .Site.Params.DateFormat)))) }}
+{{- end }}
+
+{{- if not .Date.IsZero -}}
+{{- if .Lastmod }}
+    {{- $lastmod := .Lastmod.Format (default "January 2, 2006" .Site.Params.DateFormat) }}
+    {{- $pubdate := .Date.Format (default "January 2, 2006" .Site.Params.DateFormat) }}
+    {{- if ne $lastmod $pubdate }}
+        {{- $scratch.Add "meta" (slice (printf "<span title='%s'>Update: %s</span>" (.Lastmod) (.Lastmod | time.Format (default "January 2, 2006" .Site.Params.DateFormat)))) }}
+    {{- end }}
+{{- end }}
 {{- end }}
 
 {{- if (.Param "ShowReadingTime") -}}
